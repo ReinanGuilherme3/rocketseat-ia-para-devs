@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/Aspire/">
+    <Project Path="src/Aspire/Desafios.AppHost/Desafios.AppHost.csproj" Id="7a1c4d1c-0898-4f33-a848-a45915bfb3c0" />
+  </Folder>
+  <Folder Name="/src/RAG/">
+    <Project Path="src/RAG/Desafios.NaiveRAG/Desafios.NaiveRAG.csproj" />
+  </Folder>
+  <Folder Name="/src/RAG/Recursos/">
+    <File Path="src/RAG/Recursos/os-sertoes.pdf" />
+  </Folder>
+</Solution>
