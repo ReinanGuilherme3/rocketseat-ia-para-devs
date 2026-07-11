@@ -28,7 +28,10 @@ public static class BookIndexer
         }
 
         Console.WriteLine($"Extraindo texto de '{pdfPath}'...");
-        var text = PdfTextExtractor.ExtractText(pdfPath);
+        var rawText = PdfTextExtractor.ExtractText(pdfPath);
+        // Descarta o aparato editorial (sumário, ensaios críticos, colofão) para não
+        // poluir o índice vetorial com texto "meta" sobre o livro. Veja BookContentTrimmer.
+        var text = BookContentTrimmer.TrimToBookContent(rawText);
 
         var chunks = TextChunker.Chunk(text, chunkSize, overlap).ToList();
         Console.WriteLine($"{chunks.Count} chunks gerados. Calculando embeddings...");

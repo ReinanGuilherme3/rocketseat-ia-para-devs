@@ -15,7 +15,12 @@ public class ParentRagPipeline(
     IEmbeddingGenerator<string, Embedding<float>> embeddingGenerator,
     IChatClient chatClient)
 {
-    public async Task<string> AnswerAsync(string question, int topParents = 4)
+    // topParents = 8: as distâncias neste corpus (um livro só) são muito próximas
+    // umas das outras, e o aparato editorial do PDF (índice, ensaios de Araripe/Darcy
+    // Ribeiro, histórico das crônicas) casa bem com perguntas "meta" e domina os
+    // primeiros lugares. Com topParents=4 a narrativa real da guerra — que fica nos
+    // ranks ~8-12 — nunca chega ao LLM. Trazer mais pais garante o contexto de fato.
+    public async Task<string> AnswerAsync(string question, int topParents = 8)
     {
         // 1) Pergunta -> embedding.
         var questionEmbedding = await embeddingGenerator.GenerateAsync([question]);

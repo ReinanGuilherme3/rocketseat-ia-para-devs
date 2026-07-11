@@ -29,7 +29,10 @@ public static class ParentDocumentIndexer
         }
 
         Console.WriteLine($"Extraindo texto de '{pdfPath}'...");
-        var text = PdfTextExtractor.ExtractText(pdfPath);
+        var rawText = PdfTextExtractor.ExtractText(pdfPath);
+        // Descarta o aparato editorial (sumário, ensaios críticos, colofão) para não
+        // poluir o índice vetorial com texto "meta" sobre o livro. Veja BookContentTrimmer.
+        var text = BookContentTrimmer.TrimToBookContent(rawText);
 
         var parentChunks = TextChunker.Chunk(text, parentChunkSize, parentOverlap).ToList();
         Console.WriteLine($"{parentChunks.Count} chunks pai gerados. Gerando chunks filhos e embeddings...");

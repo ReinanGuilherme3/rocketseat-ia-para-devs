@@ -31,6 +31,13 @@ public class FlatChunkStore(NpgsqlDataSource dataSource)
             """;
 
         await connection.ExecuteAsync(schemaSql);
+
+        // Numa base nova, a extensão `vector` acabou de ser criada acima. O Npgsql
+        // carrega o catálogo de tipos uma vez, no primeiro open, e o cacheia — então
+        // ele ainda não conhece o OID do tipo `vector` e, ao gravar um Pgvector.Vector,
+        // lança "Writing values of 'Pgvector.Vector' is not supported...". Recarregar
+        // os tipos aqui ensina o data source a mapear o tipo recém-criado.
+        await connection.ReloadTypesAsync();
     }
 
     public async Task<long> CountChunksAsync()

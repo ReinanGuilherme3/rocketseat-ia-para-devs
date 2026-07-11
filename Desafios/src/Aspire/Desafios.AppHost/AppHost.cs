@@ -2,7 +2,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 #region Ollama
 var ollama = builder.AddOllama("ollama")
-    //.WithGPUSupport()
+    .WithGPUSupport()
     .WithDataVolume();   // evita rebaixar os modelos toda vez que você reinicia
 
 var chatModel = ollama.AddModel("chat", "llama3.2");
